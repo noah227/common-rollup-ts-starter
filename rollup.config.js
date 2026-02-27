@@ -1,8 +1,9 @@
-const {nodeResolve} = require("@rollup/plugin-node-resolve")
-const commonjs = require("@rollup/plugin-commonjs")
-const typescript = require("@rollup/plugin-typescript")
-const terser = require("@rollup/plugin-terser")
-const json = require("@rollup/plugin-json")
+import {nodeResolve} from "@rollup/plugin-node-resolve"
+import commonjs from "@rollup/plugin-commonjs"
+import typescript from "@rollup/plugin-typescript"
+import terser from "@rollup/plugin-terser"
+import json from "@rollup/plugin-json"
+
 
 /**
  * @param input {String}
@@ -26,25 +27,25 @@ const createExport = (input, output, plugins) => ({
 })
 
 /**
- * 
- * @param {{input: string, output: string, target: "esm" | "cjs", userTerser?: boolean}[]} buildConfigList
+ *
+ * @param {{input: string, output: string, target: "esm" | "cjs", useTerser?: boolean}[]} buildConfigList
  */
 const createBuild = (buildConfigList) => {
-    return buildConfigList.reduce((buildList, {input, output, target, userTerser}) => { 
+    return buildConfigList.reduce((buildList, {input, output, target, useTerser}) => {
         buildList.push([
             input, {
                 file: output,
                 format: target
             }, {
-                userTerser
+                useTerser
             }
         ])
         return buildList
     }, []).map(item => createExport(...item))
 }
 
-module.exports = createBuild([
+export default createBuild([
     {input: "./src/index.ts", output: "./dist/index.js", target: "esm"},
-    // {input: "./src/index.ts", output: "./dist/index.min.js", target: "esm", userTerser: true},
+    {input: "./src/index.ts", output: "./dist/index.min.js", target: "esm", useTerser: true},
     // {input: "./src/index.ts", output: "./dist/index.cjs.js", target: "cjs"}
 ])

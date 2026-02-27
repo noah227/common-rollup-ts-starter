@@ -4,6 +4,7 @@
     "description": "自用rollup打包typescript用例",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "rollup -c rollup.config.js"
